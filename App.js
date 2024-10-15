@@ -29,8 +29,8 @@ const App = () => {
   }, [])
 
   const dataArray = [
-    { id: 1, value: "02:15:B2:00:01:00" },
-    { id: 2, value: "02:16:C3:00:02:00" },
+    { id: 1, value: "04:F3:52:71:05:C8" },
+    { id: 2, value: "04:F3:52:71:05:CC" },
     { id: 3, value: "02:17:D4:00:03:00" },
     { id: 4, value: "02:18:E5:00:04:00" },
     { id: 5, value: "02:19:F6:00:05:00" }
@@ -99,9 +99,9 @@ const App = () => {
       }
     >
       <StatusBar backgroundColor='#FFFFFF' barStyle='dark-content' />
+      <Text style={[styles.infoTitle, { marginBottom: 24, fontSize: 24 }]}>Presensi WiFi</Text>
       <View style={styles.card}>
         <View style={styles.infoRow}>
-          <Text style={styles.infoTitle}>Permission Wifi :</Text>
           <Text style={styles.infoValue}>{granted}</Text>
         </View>
         <TouchableOpacity style={{ backgroundColor: 'green', padding: 12, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }} onPress={cekValid}>

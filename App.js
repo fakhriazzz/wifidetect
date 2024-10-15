@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {
   PermissionsAndroid,
   Platform,
+  RefreshControl,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 import WifiManager from 'react-native-wifi-reborn';
@@ -14,7 +17,16 @@ import WifiManager from 'react-native-wifi-reborn';
 const App = () => {
   const [ssid, setSsid] = useState("")
   const [bssid, setBssid] = useState("")
-  const [hasil, sethasil] = useState(null)
+  const [granted, setgranted] = useState("")
+  const [refreshing, setRefreshing] = React.useState(false)
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    setTimeout(() => {
+      getWifiInfo()
+      setRefreshing(false)
+    }, 1000)
+  }, [])
 
   const dataArray = [
     { id: 1, value: "02:15:B2:00:01:00" },
@@ -27,7 +39,11 @@ const App = () => {
   const cekValid = () => {
     const searchValue = bssid;
     const isValuePresent = dataArray.some(item => item.value === searchValue);
-    sethasil(isValuePresent);
+    if (isValuePresent) {
+      ToastAndroid.show(`Berhasil presensi dengan wifi : ${ssid}`, ToastAndroid.SHORT)
+    } else {
+      ToastAndroid.show('Presensi gagal, harap hubungkan ke wifi', ToastAndroid.SHORT)
+    }
   }
 
   const requestPermissions = async () => {
@@ -44,6 +60,7 @@ const App = () => {
             buttonPositive: 'OK',
           },
         );
+        setgranted(granted)
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           getWifiInfo();
         } else {
@@ -75,19 +92,31 @@ const App = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <StatusBar backgroundColor='#FFFFFF' barStyle='dark-content' />
       <View style={styles.card}>
         <View style={styles.infoRow}>
-          <Text style={styles.infoTitle}>SSID:</Text>
+          <Text style={styles.infoTitle}>Permission Wifi :</Text>
+          <Text style={styles.infoValue}>{granted}</Text>
+        </View>
+        <TouchableOpacity style={{ backgroundColor: 'green', padding: 12, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }} onPress={cekValid}>
+          <Text style={[styles.infoTitle, { color: 'white' }]}>Presensi</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={[styles.card, { marginTop: 12 }]}>
+        <View style={styles.infoRow}>
+          <Text style={styles.infoTitle}>Nama wifi (ssid) :</Text>
           <Text style={styles.infoValue}>{ssid}</Text>
         </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoTitle}>BSSID:</Text>
+        <View style={[styles.infoRow, { marginBottom: 0 }]}>
+          <Text style={styles.infoTitle}>bssid :</Text>
           <Text style={styles.infoValue}>{bssid}</Text>
         </View>
-        <TouchableOpacity style={{ backgroundColor: 'green', padding: 12, alignItems: 'center', justifyContent: 'center' }} onPress={cekValid}>
-          <Text style={[styles.infoTitle, { color: 'white' }]}>Cek {hasil ? 'True' : 'False'}</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );

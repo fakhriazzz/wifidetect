@@ -102,6 +102,7 @@ const App = () => {
       <Text style={[styles.infoTitle, { marginBottom: 24, fontSize: 24 }]}>Presensi WiFi</Text>
       <View style={styles.card}>
         <View style={styles.infoRow}>
+          <Text style={styles.infoTitle}>Permission Wifi</Text>
           <Text style={styles.infoValue}>{granted}</Text>
         </View>
         <TouchableOpacity style={{ backgroundColor: 'green', padding: 12, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }} onPress={cekValid}>

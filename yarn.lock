@@ -7732,6 +7732,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-wifi-reborn@npm:^4.13.0":
+  version: 4.13.0
+  resolution: "react-native-wifi-reborn@npm:4.13.0"
+  peerDependencies:
+    react-native: ">=0.13"
+  checksum: fc7ab344af0167709ea4418a090eed2bc786ef6974deaa564c2a68b15c4039fa1d80c3a04f9cc18592ff2570235598a69b9472da41df12740fb2364e3eefd355
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.75.4":
   version: 0.75.4
   resolution: "react-native@npm:0.75.4"
@@ -9276,6 +9285,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.3.1
     react-native: 0.75.4
+    react-native-wifi-reborn: ^4.13.0
     react-test-renderer: 18.3.1
     typescript: 5.0.4
   languageName: unknown
